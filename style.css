@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f5f2;
+}
+
+/* HERO */
+.hero {
+  background: url("img/back.jpg") center / cover no-repeat;
+  min-height: 100vh;
+  color: white;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(0,0,0,0.6);
+}
+
+.nav h3 {
+  color: #fff;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav a:hover {
+  color: #c19a6b;
+}
+
+.hero-text {
+  text-align: center;
+  margin-top: 150px;
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.hero-text p {
+  font-size: 18px;
+}
+
+.about {
+  display: flex;
+  gap: 40px;
+  padding: 70px;
+  background: #fbf6ee; /* зураг дээрх шаргал фон */
+  align-items: center;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-text h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #7a5a3a;
+}
+
+.about-text p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.about-img {
+  flex: 1;
+}
+
+.about-img img {
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* CTA */
+.cta {
+  background: url("img/home2.jpg") center / cover no-repeat;
+  color: white;
+  text-align: center;
+  padding: 250px;
+}
+
+.cta button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border: none;
+  background: #c19a6b;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cta button:hover {
+  background: #a97c50;
+}
+
+/* REVIEWS */
+.reviews {
+  padding: 60px;
+  text-align: center;
+  background: #a97c50;
+}
+
+.review-box {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.review {
+  background: #a97c50;
+  padding: 20px;
+  width: 250px;
+  border-radius: 8px;
+}
+
+/* FOOTER */
+footer {
+  background: black;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
