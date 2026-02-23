@@ -78,6 +78,7 @@
       <input type="password" id="passwordInput" placeholder="Password" required>
       <button type="submit" class="login-btn">Sign in</button>
     </form>
+    <div class="message_box"></div>
   </div>
 </div>
 
@@ -122,6 +123,7 @@ const auth = getAuth(app);
 const emailInput = document.getElementById("emailInput");
 const passwordInput = document.getElementById("passwordInput");
 const form = document.querySelector("form");
+const message = document.querySelector(".message_box");
 
 form.addEventListener("submit", function(e) {
   e.preventDefault();
@@ -131,13 +133,28 @@ form.addEventListener("submit", function(e) {
 
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      const user = userCredential.user;
-      alert("Account created: " + user.email);
-      console.log("Account created", user);
+      message.textContent = "Account successfully created!";
+      message.classList.remove("error");
+      message.classList.add("created");
     })
     .catch((error) => {
-      alert(error.message);
-      console.log(error.code, error.message);
+      const errorCode = error.code;
+
+      message.classList.remove("created");
+      message.classList.add("error");
+
+      if (errorCode === "auth/email-already-in-use") {
+        message.textContent = "This email is already used!";
+      } 
+      else if (errorCode === "auth/weak-password") {
+        message.textContent = "Password must be at least 6 characters!";
+      } 
+      else if (errorCode === "auth/invalid-email") {
+        message.textContent = "Invalid email format!";
+      } 
+      else {
+        message.textContent = "Something went wrong!";
+      }
     });
 });
 </script>
