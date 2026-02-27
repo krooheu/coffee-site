@@ -78,6 +78,7 @@
       <input type="password" id="passwordInput" placeholder="Password" required>
       <button type="submit" class="login-btn">Sign in</button>
     </form>
+    <div><a href="forgot" id="forgot">Нууц үгээ мартсан</a></div>
     <div class="message_box"></div>
   </div>
 </div>
@@ -104,8 +105,11 @@ window.addEventListener("click", function(e) {
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } 
-from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAMqAChlcmEbI60gJ2fAhZPjkiVNROpuco",
@@ -120,11 +124,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// Elements
 const emailInput = document.getElementById("emailInput");
 const passwordInput = document.getElementById("passwordInput");
 const form = document.querySelector("form");
 const message = document.querySelector(".message_box");
+const forgotBtn = document.getElementById("forgot");
 
+// ================= REGISTER =================
 form.addEventListener("submit", function(e) {
   e.preventDefault();
 
@@ -133,27 +140,62 @@ form.addEventListener("submit", function(e) {
 
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
+      message.className = "message_box created";
       message.textContent = "Account successfully created!";
-      message.classList.remove("error");
-      message.classList.add("created");
+
+      // 2 секунд дараа popup хаах
+      setTimeout(() => {
+        form.reset();
+        message.textContent = "";
+        message.className = "message_box";
+      }, 2000);
     })
     .catch((error) => {
-      const errorCode = error.code;
+      message.className = "message_box error";
 
-      message.classList.remove("created");
-      message.classList.add("error");
-
-      if (errorCode === "auth/email-already-in-use") {
+      if (error.code === "auth/email-already-in-use") {
         message.textContent = "This email is already used!";
       } 
-      else if (errorCode === "auth/weak-password") {
+      else if (error.code === "auth/weak-password") {
         message.textContent = "Password must be at least 6 characters!";
       } 
-      else if (errorCode === "auth/invalid-email") {
+      else if (error.code === "auth/invalid-email") {
         message.textContent = "Invalid email format!";
       } 
       else {
         message.textContent = "Something went wrong!";
+      }
+    });
+});
+
+// ================= FORGOT PASSWORD =================
+forgotBtn.addEventListener("click", function(e) {
+  e.preventDefault();
+
+  const email = emailInput.value;
+
+  if (!email) {
+    message.className = "message_box error";
+    message.textContent = "Email хаягаа оруулна уу!";
+    return;
+  }
+
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      message.className = "message_box created";
+      message.textContent = "Reset link email рүү илгээгдлээ!";
+    })
+    .catch((error) => {
+      message.className = "message_box error";
+
+      if (error.code === "auth/user-not-found") {
+        message.textContent = "Ийм email бүртгэлгүй байна!";
+      } 
+      else if (error.code === "auth/invalid-email") {
+        message.textContent = "Email буруу форматтай!";
+      } 
+      else {
+        message.textContent = "Алдаа гарлаа!";
       }
     });
 });
