@@ -12,7 +12,7 @@ body {
 /* HERO */
 .hero {
   background: url("img/back.jpg") center / cover no-repeat;
-  min-height: 100vh;
+  min-height: 500px;
   color: white;
 }
 
@@ -306,4 +306,26 @@ footer {
   line-height: 40px;
   text-align: center;
   color: white;
+}
+.message_box {
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  margin-top: 15px;
+  line-height: 40px;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.message_box.created {
+  background: green;
+  opacity: 1;
+}
+
+.message_box.error {
+  background: red;
+  opacity: 1;
 }
